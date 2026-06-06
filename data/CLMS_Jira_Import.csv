@@ -1,0 +1,220 @@
+Project Key,Issue Type,Summary,Epic Link,Epic Name,Priority,Story Points,Sprint,Labels,Fix Version/s,Description,Reporter,Assignee
+CLMS,Epic,FTP File Ingestion,,FTP File Ingestion,High,,,,v1.0 - Go-Live Jul 30 2026,,,
+CLMS,Epic,File Validation & QA,,File Validation & QA,High,,,,v1.0 - Go-Live Jul 30 2026,,,
+CLMS,Epic,Excel Formatting,,Excel Formatting,High,,,,v1.0 - Go-Live Jul 30 2026,,,
+CLMS,Epic,Pivot Tables & Charts,,Pivot Tables & Charts,High,,,,v1.0 - Go-Live Jul 30 2026,,,
+CLMS,Epic,KPI Dashboard,,KPI Dashboard,High,,,,v1.0 - Go-Live Jul 30 2026,,,
+CLMS,Story,Daily FTP Connection & Download,CLMS-E1,FTP File Ingestion,High,5,CLMS Sprint 1,"ftp,ingestion,automation",v1.0 - Go-Live Jul 30 2026,"*As a* Data Operations Analyst, *I want to* automatically connect to the FTP server and download the daily claims CSV file, *so that* I don't have to manually retrieve files and can ensure timely data processing.
+
+*Acceptance Criteria:*
+1. System connects to FTP server daily at a scheduled time (e.g., 6:00 AM)
+2. System downloads the latest claims CSV matching the expected filename pattern
+3. Download is logged with timestamp, file size, and status (success/failure)
+4. Alert is sent to team if download fails or file is not available by deadline
+5. Downloaded file is stored in a designated staging folder with date-stamped naming
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,FTP Connection Error Handling & Retry,CLMS-E1,FTP File Ingestion,High,3,CLMS Sprint 1,"ftp,error-handling,alerts",v1.0 - Go-Live Jul 30 2026,"*As a* Data Operations Analyst, *I want to* receive immediate notification if the FTP download fails, *so that* I can take manual corrective action before downstream processes are impacted.
+
+*Acceptance Criteria:*
+1. System retries connection up to 3 times before marking as failed
+2. Email/Slack alert is sent on failure with error details
+3. Failure is logged in audit trail
+4. System supports manual trigger for re-download
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Tab/Sheet Completeness Validation,CLMS-E2,File Validation & QA,High,5,CLMS Sprint 1,"validation,qa,completeness",v1.0 - Go-Live Jul 30 2026,"*As a* Data Quality Analyst, *I want to* automatically verify all required tabs are present in the daily file, *so that* I can catch incomplete files before they corrupt downstream reports.
+
+*Acceptance Criteria:*
+1. System checks for all expected tabs defined in a configuration list
+2. Missing tabs trigger a validation failure with specific tab names listed
+3. Validation report is generated with pass/fail status per tab
+4. File is quarantined (not processed further) if critical tabs are absent
+5. Stakeholder alert sent with validation summary
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Data Format & Schema Validation,CLMS-E2,File Validation & QA,High,8,CLMS Sprint 2,"validation,schema,data-quality",v1.0 - Go-Live Jul 30 2026,"*As a* Data Quality Analyst, *I want to* verify column headers, data types, and field formats match the expected schema, *so that* I can detect vendor-side changes or errors before they propagate into reports.
+
+*Acceptance Criteria:*
+1. System validates column names match expected schema per tab
+2. Date fields are checked for correct format (e.g., MM/DD/YYYY)
+3. Numeric fields are validated as non-negative and within expected range
+4. Row count is compared against prior day — flag if >20% variance
+5. Validation results logged with row-level error details where applicable
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Null & Completeness Field Checks,CLMS-E2,File Validation & QA,Medium,3,CLMS Sprint 2,"validation,null-check,data-quality",v1.0 - Go-Live Jul 30 2026,"*As a* Data Quality Analyst, *I want to* identify null or blank values in required fields, *so that* I can ensure data integrity before analysis begins.
+
+*Acceptance Criteria:*
+1. Required fields are defined in configuration
+2. System flags rows where required fields are null or blank
+3. Summary count of null violations is included in validation report
+4. Threshold-based rule: file fails if >5% of rows have critical null values
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,CSV to Formatted Excel Workbook Conversion,CLMS-E3,Excel Formatting,High,5,CLMS Sprint 2,"excel,formatting,conversion",v1.0 - Go-Live Jul 30 2026,"*As a* Data Operations Analyst, *I want to* automatically convert the validated CSV file into a formatted Excel workbook, *so that* stakeholders receive a polished, ready-to-use file instead of raw CSV.
+
+*Acceptance Criteria:*
+1. Each data tab from the CSV maps to a corresponding Excel sheet
+2. File is saved as .xlsx with a date-stamped filename
+3. Headers are bold, frozen, and styled with brand color
+4. All columns are auto-fitted to content width
+5. Alternating row shading applied for readability
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Data Tab Formatting Standards,CLMS-E3,Excel Formatting,Medium,5,CLMS Sprint 2,"excel,formatting,standards",v1.0 - Go-Live Jul 30 2026,"*As a* Data Operations Analyst, *I want to* apply consistent formatting rules across all data tabs, *so that* reports are immediately readable and professional without manual cleanup.
+
+*Acceptance Criteria:*
+1. Currency columns formatted as $#,##0.00
+2. Date columns formatted as MM/DD/YYYY
+3. Numeric columns right-aligned; text columns left-aligned
+4. Conditional formatting highlights values exceeding defined thresholds
+5. Print area and page setup configured for standard printing
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Automated Pivot Table Creation,CLMS-E4,Pivot Tables & Charts,High,8,CLMS Sprint 3,"excel,pivot-tables,analytics",v1.0 - Go-Live Jul 30 2026,"*As a* Claims Analyst, *I want to* have pivot tables automatically generated from claims data, *so that* I can analyze summary views without manually building them each day.
+
+*Acceptance Criteria:*
+1. Pivot tables created for: claims by category, by date, by payer, by status
+2. Pivot tables placed on a dedicated 'Pivot Summary' sheet
+3. Each pivot includes row totals and grand total
+4. Pivot tables refresh automatically when workbook opens
+5. Slice fields configured for date range and claim type filtering
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Line Graph Trend Visualization,CLMS-E4,Pivot Tables & Charts,High,8,CLMS Sprint 3,"excel,charts,trends,visualization",v1.0 - Go-Live Jul 30 2026,"*As a* Claims Analyst, *I want to* see line graphs showing claims trends over time, *so that* I can quickly identify patterns, spikes, or anomalies without manual charting.
+
+*Acceptance Criteria:*
+1. Line graphs generated for: daily claim volume, total claim amount, denial rate
+2. Charts include axis labels, legend, and data point markers
+3. Rolling 30-day window displayed by default
+4. Charts placed on a dedicated 'Trend Charts' sheet
+5. Charts auto-update when underlying pivot data refreshes
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,KPI Summary Dashboard Sheet,CLMS-E5,KPI Dashboard,High,13,CLMS Sprint 3,"dashboard,kpi,excel,reporting",v1.0 - Go-Live Jul 30 2026,"*As a* Healthcare Operations Manager, *I want to* view a single-page KPI dashboard within the Excel workbook, *so that* I can monitor performance at a glance without navigating multiple tabs.
+
+*Acceptance Criteria:*
+1. Dashboard includes KPI tiles: Total Claims, Total Billed Amount, Denial Rate %, Avg Days to Process
+2. KPIs compared to prior period with % change and directional arrow indicator
+3. Dashboard pulls live from pivot data — no manual refresh needed
+4. Top 5 denial reasons displayed as a ranked list
+5. Visual traffic-light indicators (green/yellow/red) for each KPI vs. target threshold
+6. Dashboard is print-ready and exportable to PDF
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Trend Analysis & Anomaly Flagging on Dashboard,CLMS-E5,KPI Dashboard,Medium,8,CLMS Sprint 3,"dashboard,anomaly-detection,trends",v1.0 - Go-Live Jul 30 2026,"*As a* Healthcare Operations Manager, *I want to* see trend lines and automatic anomaly flags on the dashboard, *so that* I can take action on outliers without waiting for manual analysis.
+
+*Acceptance Criteria:*
+1. 7-day and 30-day trend sparklines shown beside each KPI
+2. Anomaly detection flags days where volume deviates >2 standard deviations from mean
+3. Flagged anomalies annotated on trend charts
+4. Summary note auto-generated describing top changes from prior period
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
+CLMS,Story,Stakeholder Distribution & Dashboard Publishing,CLMS-E5,KPI Dashboard,Medium,5,CLMS Sprint 3,"distribution,email,publishing,automation",v1.0 - Go-Live Jul 30 2026,"*As a* Data Operations Analyst, *I want to* automatically distribute the completed dashboard to stakeholders, *so that* decision-makers receive timely insights without manual email steps.
+
+*Acceptance Criteria:*
+1. Completed Excel file emailed to distribution list daily by 9:00 AM
+2. PDF export of dashboard tab included as attachment
+3. Email subject includes report date and key headline metric
+4. Distribution list managed via configuration (not hardcoded)
+5. Delivery confirmation logged in audit trail
+
+*Definition of Done:*
+1. All acceptance criteria verified by PO
+2. Code reviewed and merged to main branch
+3. Unit tests written and passing
+4. Tested with real or representative sample claims file
+5. Edge cases handled (empty file, missing tab, FTP timeout, null values)
+6. Configuration steps documented (FTP creds, schema config, distribution list)
+7. No critical bugs open against the story
+8. PO demo/review completed and story accepted in Jira",,
