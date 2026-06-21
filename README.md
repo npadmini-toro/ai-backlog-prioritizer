@@ -18,6 +18,20 @@ keeping the human in control.
 - Lets PO challenge any score in plain English
 - Exports final prioritized backlog to CSV
 
+## How It Works
+
+```mermaid
+flowchart TD
+    A["Upload a Jira CSV export"] --> B["Add PO context notes<br/>(sprint goals, constraints)"]
+    B --> C["Claude scores each story:<br/>Reach, Impact, Confidence, Effort"]
+    C --> D["RICE = (Reach x Impact x Confidence) / Effort"]
+    D --> E["Pandas ranks stories<br/>highest to lowest"]
+    E --> F["Ranked backlog +<br/>reasoning per story"]
+    F --> G["PO challenges a score<br/>in plain English"]
+    G -->|Claude re-explains| F
+    F --> H["Export prioritized<br/>backlog to CSV"]
+```
+
 ## Product Decisions I Made (Why This Is a PO Project)
 | Decision | What I chose | Why |
 |----------|-------------|-----|
